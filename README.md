@@ -7,7 +7,8 @@ Here’s the updated `README.md` with **MySQL** as the database instead of Postg
 ```markdown
 # 🛡️ Reliable Fraud Detection System Dashboard
 
-A full-stack Python-based web dashboard that monitors transactions and system reliability metrics for an online fraud detection system. Built using **Flask**, **MySQL**, and **Docker**, the system tracks fraudulent activities and software reliability indicators such as MTBF, MTTR, Error Rate, and Availability.
+A full-stack Python-based web dashboard that monitors transactions and system reliability metrics for an online fraud detection system.
+Built using **Flask**, **MySQL**, and **Docker**, the system tracks fraudulent activities and software reliability indicators such as MTBF, MTTR, Error Rate, and Availability.
 
 ---
 
