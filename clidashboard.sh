@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DB_USER="root"
-DB_PASS="rootpass"
-DB_NAME="fraudsys"
+DB_NAME="fraud_detection"
+DB_PASS="root_password"
 DB_PORT="3307"
 
 menu() {
@@ -19,7 +19,7 @@ menu() {
 
 create_user() {
   read -p "Enter username: " username
-  mysql -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
+  mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
     "INSERT INTO users (username) VALUES ('$username');"
   echo "✅ User '$username' created."
 }
