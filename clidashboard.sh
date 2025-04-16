@@ -98,42 +98,50 @@ check_fraud() {
 
   echo ""
 
-  # Rule 2: More than 3 transactions in 1 minute
-  echo "🚨 Users with > 3 transactions in the last 2 minute:"
-  mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
-    "UPDATE transactions
-     SET is_fraud = TRUE
-     WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
-     AND user_id IN (
-       SELECT user_id
-       FROM transactions
-       WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
-       GROUP BY user_id
-       HAVING COUNT(*) > 3
-     )
-     AND is_fraud = FALSE;
+# Rule 2: More than 3 transactions in 2-minute interval
+  echo "🚨 Users with > 3 transactions in the last 2 minutes:"
+  mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e "
+    -- Step 1: Flag fraudulent transactions
+    UPDATE transactions
+    SET is_fraud = TRUE
+    WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
+    AND user_id IN (
+        SELECT user_id FROM (
+        SELECT user_id
+        FROM transactions
+        WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
+        GROUP BY user_id
+        HAVING COUNT(*) > 3
+        ) AS temp_users
+    )
+    AND is_fraud = FALSE;
 
-     INSERT INTO fraud_alerts (transaction_id, reason)
-     SELECT t.id, 'More than 3 transactions in 2 minute'
-     FROM transactions t
-     WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
-     AND t.user_id IN (
-     SELECT t2.user_id
-     FROM transactions t2
-     WHERE t2.timestamp >= NOW() - INTERVAL 2 MINUTE
-     GROUP BY t2.user_id
-     HAVING COUNT(*) > 3
-     )
-     AND NOT EXISTS (
-     SELECT 1 FROM fraud_alerts f WHERE f.transaction_id = t.id
-     );
+    -- Step 2: Insert into fraud_alerts
+    INSERT INTO fraud_alerts (transaction_id, reason)
+    SELECT t.id, 'More than 3 transactions in 2 minutes'
+    FROM transactions t
+    WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
+    AND t.user_id IN (
+        SELECT user_id FROM (
+        SELECT user_id
+        FROM transactions
+        WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
+        GROUP BY user_id
+        HAVING COUNT(*) > 3
+        ) AS temp_users
+    )
+    AND NOT EXISTS (
+        SELECT 1 FROM fraud_alerts f WHERE f.transaction_id = t.id
+    );
 
-     SELECT u.name, COUNT(*) as tx_count
-     FROM transactions t
-     JOIN users u ON t.user_id = u.id
-     WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
-     GROUP BY t.user_id
-     HAVING tx_count > 3;"
+    -- Step 3: Output flagged users and their transaction counts
+    SELECT u.name, COUNT(*) AS tx_count
+    FROM transactions t
+    JOIN users u ON t.user_id = u.id
+    WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
+    GROUP BY t.user_id
+    HAVING tx_count > 3;
+    "
 
 }
 
