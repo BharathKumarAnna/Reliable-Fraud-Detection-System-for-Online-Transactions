@@ -239,6 +239,34 @@ run_fraud_detection() {
     GROUP BY t.user_id
     HAVING tx_count > 3;
     "
+    
+  echo "🚨 Step 4: Detect sudden rapid growth in balance (> ₹50,000 increase in 2 mins)..."
+  mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
+  "
+  -- Insert fraud alert for users who received more than ₹50,000 in last 2 minutes
+  INSERT INTO fraud_alerts (transaction_id, reason, flagged_at)
+  SELECT t.id, 'Sudden rapid growth in balance', NOW()
+  FROM transactions t
+  JOIN (
+    SELECT user_id
+    FROM transactions
+    WHERE timestamp >= NOW() - INTERVAL 2 MINUTE
+    GROUP BY user_id
+    HAVING SUM(amount) > 50000
+  ) flagged_users ON t.user_id = flagged_users.user_id
+  WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
+  AND NOT EXISTS (
+    SELECT 1 FROM fraud_alerts f WHERE f.transaction_id = t.id
+  );
+
+  -- Show names and total amount added in last 2 minutes (for visibility)
+  SELECT u.name, SUM(t.amount) AS growth
+  FROM users u
+  JOIN transactions t ON u.id = t.user_id
+  WHERE t.timestamp >= NOW() - INTERVAL 2 MINUTE
+  GROUP BY u.id
+  HAVING growth > 50000;
+"
 
   echo "✅ Fraud detection completed at $(date)"
 }
@@ -289,7 +317,6 @@ view_metrics() {
 }
 
 # --------------------------------------- TRANSACTION BLOCK --------------------------------------
-# Add these to clidashboard.sh, after login is successful
 
 make_transaction() {
   if [ "$USER_LOGGED_IN" != true ]; then
