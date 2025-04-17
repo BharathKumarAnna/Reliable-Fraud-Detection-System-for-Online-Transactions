@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql/mysql-server:8.0
+    platform: linux/x86_64
+    container_name: fraud_detection_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: fraud_detection
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    networks:
+      - fraud_detection_network
+
+networks:
+  fraud_detection_network:
+    driver: bridge
+
+volumes:
+  mysql_data: 
