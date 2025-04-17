@@ -1,0 +1,133 @@
+🕒 Health Check at Wed Apr 16 13:42:00 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	1	12000.00	2025-04-15 11:36:12
+4	2	20000.00	2025-04-15 11:38:27
+5	1	30000.00	2025-04-15 11:38:47
+6	3	12000.00	2025-04-15 13:56:46
+7	3	13000.00	2025-04-15 13:56:59
+8	3	14000.00	2025-04-15 13:57:10
+18	5	30000.00	2025-04-16 07:17:50
+19	5	40000.00	2025-04-16 07:18:02
+20	5	50000.00	2025-04-16 07:18:16
+21	5	60000.00	2025-04-16 07:18:45
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Wed Apr 16 13:42:00 IST 2025
+-----------------------------
+🕒 Health Check at Wed Apr 16 14:44:26 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	1	12000.00	2025-04-15 11:36:12
+4	2	20000.00	2025-04-15 11:38:27
+5	1	30000.00	2025-04-15 11:38:47
+6	3	12000.00	2025-04-15 13:56:46
+7	3	13000.00	2025-04-15 13:56:59
+8	3	14000.00	2025-04-15 13:57:10
+18	5	30000.00	2025-04-16 07:17:50
+19	5	40000.00	2025-04-16 07:18:02
+20	5	50000.00	2025-04-16 07:18:16
+21	5	60000.00	2025-04-16 07:18:45
+22	5	10001.00	2025-04-16 08:21:53
+23	5	10002.00	2025-04-16 08:22:08
+24	5	10003.00	2025-04-16 08:22:25
+25	5	10004.00	2025-04-16 08:22:37
+26	1	50001.00	2025-04-16 09:12:34
+27	1	50002.00	2025-04-16 09:12:49
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Wed Apr 16 14:44:27 IST 2025
+-----------------------------
+🕒 Health Check at Wed Apr 16 14:46:17 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	1	12000.00	2025-04-15 11:36:12
+4	2	20000.00	2025-04-15 11:38:27
+5	1	30000.00	2025-04-15 11:38:47
+6	3	12000.00	2025-04-15 13:56:46
+7	3	13000.00	2025-04-15 13:56:59
+8	3	14000.00	2025-04-15 13:57:10
+18	5	30000.00	2025-04-16 07:17:50
+19	5	40000.00	2025-04-16 07:18:02
+20	5	50000.00	2025-04-16 07:18:16
+21	5	60000.00	2025-04-16 07:18:45
+22	5	10001.00	2025-04-16 08:21:53
+23	5	10002.00	2025-04-16 08:22:08
+24	5	10003.00	2025-04-16 08:22:25
+25	5	10004.00	2025-04-16 08:22:37
+26	1	50001.00	2025-04-16 09:12:34
+27	1	50002.00	2025-04-16 09:12:49
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Wed Apr 16 14:46:17 IST 2025
+-----------------------------
+🕒 Health Check at Wed Apr 16 14:47:31 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	1	12000.00	2025-04-15 11:36:12
+4	2	20000.00	2025-04-15 11:38:27
+5	1	30000.00	2025-04-15 11:38:47
+6	3	12000.00	2025-04-15 13:56:46
+7	3	13000.00	2025-04-15 13:56:59
+8	3	14000.00	2025-04-15 13:57:10
+18	5	30000.00	2025-04-16 07:17:50
+19	5	40000.00	2025-04-16 07:18:02
+20	5	50000.00	2025-04-16 07:18:16
+21	5	60000.00	2025-04-16 07:18:45
+22	5	10001.00	2025-04-16 08:21:53
+23	5	10002.00	2025-04-16 08:22:08
+24	5	10003.00	2025-04-16 08:22:25
+25	5	10004.00	2025-04-16 08:22:37
+26	1	50001.00	2025-04-16 09:12:34
+27	1	50002.00	2025-04-16 09:12:49
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Wed Apr 16 14:47:31 IST 2025
+-----------------------------
+🕒 Health Check at Wed Apr 16 16:47:30 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Wed Apr 16 16:47:30 IST 2025
+-----------------------------
+🕒 Health Check at Thu Apr 17 16:43:28 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	7	12000.00	2025-04-17 04:04:15
+3	9	20000.00	2025-04-17 05:00:15
+6	16	15000.00	2025-04-17 10:36:07
+7	16	12000.00	2025-04-17 10:37:24
+8	17	27500.00	2025-04-17 10:40:45
+9	17	27000.00	2025-04-17 10:43:40
+10	19	60000.00	2025-04-17 11:10:07
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Thu Apr 17 16:43:28 IST 2025
+-----------------------------
+🕒 Health Check at Thu Apr 17 16:54:24 IST 2025
+🚨 High-value transactions (> 10000):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+id	user_id	amount	timestamp
+2	7	12000.00	2025-04-17 04:04:15
+3	9	20000.00	2025-04-17 05:00:15
+6	16	15000.00	2025-04-17 10:36:07
+7	16	12000.00	2025-04-17 10:37:24
+8	17	27500.00	2025-04-17 10:40:45
+9	17	27000.00	2025-04-17 10:43:40
+10	19	60000.00	2025-04-17 11:10:07
+12	20	12000.00	2025-04-17 11:20:37
+13	20	18000.00	2025-04-17 11:20:52
+14	20	40000.00	2025-04-17 11:21:07
+15	20	30000.00	2025-04-17 11:21:23
+17	20	30000.00	2025-04-17 11:22:03
+18	20	19999.00	2025-04-17 11:22:18
+🚨 Rapid-fire transactions (more than 3 in 1 min):
+mysql: [Warning] Using a password on the command line interface can be insecure.
+✅ Health Check completed at Thu Apr 17 16:54:25 IST 2025
+-----------------------------
