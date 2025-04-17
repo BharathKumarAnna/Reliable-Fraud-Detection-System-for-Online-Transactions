@@ -1,7 +1,6 @@
-Package Version
-------- -------
-bcrypt  4.3.0
-blinker 1.9.0
-click   8.1.8
-pip     24.0
-PyMySQL 1.1.1
+# source venv/bin/activate
+
+bcrypt==4.3.0
+blinker==1.9.0
+click==8.1.8
+PyMySQL==1.1.1

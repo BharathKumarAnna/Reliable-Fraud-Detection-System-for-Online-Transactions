@@ -127,6 +127,7 @@ view_users() {
     "SELECT id, name, phone_number, email, upi_id, created_at FROM users;"
 }
 
+
 # ----------------------------------- ADMIN BLOCK ------------------------------------
 admin_dashboard() 
 {
@@ -288,24 +289,55 @@ view_metrics() {
 }
 
 # --------------------------------------- TRANSACTION BLOCK --------------------------------------
+# Add these to clidashboard.sh, after login is successful
 
 make_transaction() {
-  read -p "Enter upi id: " upi_id
-  read -p "Enter amount: " amount
+  if [ "$USER_LOGGED_IN" != true ]; then
+    echo "❌ Please login first."
+    return
+  fi
 
-  user_id=$(mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -sse \
-    "SELECT id FROM users WHERE upi_id='$UPI_ID';")
+  read -p "Enter receiver UPI ID: " RECEIVER_UPI
+  read -p "Enter amount to transfer: " AMOUNT
 
-  if [ -z "$user_id" ]; then
-    echo "❌ User not found."
+  RECEIVER_ID=$(mysql -h127.0.0.1 -N -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
+  "SELECT id FROM users WHERE upi_id = '$RECEIVER_UPI';")
+
+  if [ -z "$RECEIVER_ID" ]; then
+    echo "❌ Invalid UPI ID."
+    return
+  fi
+
+  BALANCE=$(mysql -h127.0.0.1 -N -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
+  "SELECT account_balance FROM users WHERE id = $USER_ID;")
+
+  if (( $(echo "$BALANCE < $AMOUNT" | bc -l) )); then
+    echo "❌ Insufficient balance."
     return
   fi
 
   mysql -h127.0.0.1 -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
-    "INSERT INTO transactions (user_id, amount) VALUES ($user_id, $amount);"
+  "START TRANSACTION;
+   UPDATE users SET account_balance = account_balance - $AMOUNT WHERE id = $USER_ID;
+   UPDATE users SET account_balance = account_balance + $AMOUNT WHERE id = $RECEIVER_ID;
+   INSERT INTO transactions (user_id, amount, timestamp) VALUES ($USER_ID, $AMOUNT, NOW());
+   COMMIT;"
 
-  echo "✅ Transaction of $amount added for $UPI_ID."
+  echo "✅ Transaction successful!"
 }
+
+check_balance() {
+  if [ "$USER_LOGGED_IN" != true ]; then
+    echo "❌ Please login first."
+    return
+  fi
+
+  BALANCE=$(mysql -h127.0.0.1 -N -u$DB_USER -p$DB_PASS -P$DB_PORT -D$DB_NAME -e \
+  "SELECT account_balance FROM users WHERE id = $USER_ID;")
+
+  echo "💰 Your current balance is: ₹$BALANCE"
+}
+
 
 # ------------------------------------ MAIN BLOCK ----------------------------------------
 
@@ -328,16 +360,12 @@ while true; do
   else
     echo -e "\\n📋 MAIN MENU (Logged in as $USER_NAME):"
     echo "1. Make Transaction"
-    # echo "1. Run Health Check"
-    # echo "2. Run Fraud Detection"
     echo "2. Logout"
-    echo "3. Check Balance"
+    echo "3. View Balance"
     read -p "Choose an option: " CHOICE
 
     case $CHOICE in
       1) make_transaction ;;
-      # 1) run_health_check ;;
-      # 2) run_fraud_detection ;;
       2) 
         echo "🔓 Logging out..."
         USER_LOGGED_IN=false
@@ -345,7 +373,7 @@ while true; do
         USER_PHONE=""
         USER_ID=""
         ;;
-      3) check_balance ;; #yet to create
+      3) check_balance ;; 
       *) echo "❌ Invalid option" ;;
     esac
 

@@ -102,3 +102,4 @@ For future versions:
 
 > Created by Bharath Kumar | April 2025
 
+# source venv/bin/activate
