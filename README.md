@@ -1,105 +1,118 @@
-# 💳 Reliable Fraud Detection System (v1.0)
+# 💳 CLI-Based Fraud Detection System
 
-A simple CLI-based fraud detection system using **Shell**, **MySQL**, and **Docker**. Designed for fast prototyping, offline simulations, and practicing full-stack CLI + DB systems.
-
----
-
-## 🧰 Tech Stack
-- **Shell Script (Bash)** — CLI dashboard
-- **MySQL** — Database and rules
-- **Docker** — MySQL containerization
+A shell-scripted command-line application for secure UPI transactions, user management, and real-time fraud detection using MySQL and Docker. It includes OTP-based user authentication, admin controls, and transaction anomaly detection through automated health checks.
 
 ---
 
-## ⚙️ Features
+## 📦 Features
 
-### 🔸 CLI Menu
+- 🔐 **User Authentication** with OTP verification and bcrypt-hashed passwords
+- 💸 **UPI-Based Transactions** with balance tracking
+- 🚨 **Fraud Detection Logic**:
+  - High-value transaction alerts
+  - Rapid transaction alerts
+- 📊 **CLI Dashboard** for users and admins
+- ♻️ **Health Monitoring** and system logging
+- 🐳 **Dockerized** MySQL setup with preloaded schema
+
+---
+
+## 📁 Project Structure
+
 ```
-1. Create User
-2. View Users
-3. Make Transaction
-4. Admin Login
-5. Fraud Rules
-6. View Dashboard Metrics
-7. Exit
+.
+├── clidashboard.sh          # Main CLI script (User + Admin interface)
+├── healthcheck.sh           # Automated fraud rule checks
+├── docker-compose.yml       # Docker environment setup
+├── init_db.sql              # MySQL DB schema & table creation
+├── requirements.txt         # Python packages (bcrypt, PyMySQL)
+└── logs/                    # Health and fraud logs
 ```
-
-### 👤 User Module
-- Add user with name and email.
-- View all users with current balances.
-
-### 💸 Transaction Module
-- Add transactions for a user.
-- Updates balance in real-time.
-
-### 🔐 Admin Module
-- Requires admin password (`admin123` by default).
-- Runs fraud detection rules.
-
-### 🚨 Fraud Rules
-1. **Transactions > 10000** — Flagged as suspicious.
-2. **More than 3 transactions in 1 minute** — Flagged.
-
-Results stored in `fraud_alerts` and updated in `transactions` via `is_fraud = TRUE`.
-
-### 📊 Metrics Dashboard
-- Total users, transactions.
-- Fraud count.
-- HealthCheck status.
 
 ---
 
-## 🐳 Docker Setup
+## 🚀 Getting Started
 
-### 🔸 Run MySQL via Docker
+### 1. Clone the Repo & Launch MySQL in Docker
+
 ```bash
+git clone <your-repo-url>
+cd project-folder
 docker-compose up -d
 ```
-- MySQL root user: `root`
-- Password: `root_password`
-- Port: `3307`
 
-### 🔸 Initialize DB
+### 2. Initialize Environment
+
+Install required Python libraries:
 ```bash
-docker exec -it fraud_detection_mysql mysql -uroot -proot_password < init_db.sql
+pip install -r requirements.txt
 ```
 
----
+### 3. Run the CLI Dashboard
 
-## 🚀 Start CLI
 ```bash
 chmod +x clidashboard.sh
 ./clidashboard.sh
 ```
 
----
+### 4. Run Scheduled Health Checks (Optional)
 
-## 📂 File Structure
-```
-.
-├── clidashboard.sh       # Shell CLI dashboard
-├── init_db.sql           # MySQL schema
-├── docker-compose.yaml   # MySQL setup
-└── README.md             # Project guide
+```bash
+chmod +x healthcheck.sh
+./healthcheck.sh
 ```
 
 ---
 
-## 🧪 Sample Users & Transactions
-Use options 1 and 3 in the CLI to populate data. You may simulate fraud by sending:
-- 4+ transactions in under 1 minute
-- One transaction above 10000
+## 🗃️ Database Schema Highlights
+
+- `users`: name, phone, email, upi_id, balance, hashed password
+- `transactions`: amount, timestamp, fraud flag
+- `fraud_alerts`: transaction-based flags
+- `metrics`, `health_checks`: system performance and anomaly data
+- `user_otp`: for secure verification
 
 ---
 
-## ✅ Done!
-This is the **v1.0** of a CLI-based transaction fraud detection system.
+## 🛡️ Fraud Rules Implemented
 
-For future versions:
-- Add export-to-CSV
-- Add logging & cron jobs
-- Add Python web dashboard
+- 🚨 Transactions > ₹10,000
+- 🚨 More than 3 transactions by a user in 2 minutes
 
-> Created by Bharath Kumar | April 2025
+Alerts are logged in `logs/fraud_system.log`.
 
-# source venv/bin/activate
+---
+
+## 👨‍💻 Admin Access
+
+Admin credentials (default):
+```
+Username: admin
+Password: secret123
+```
+
+(Admin module can be extended further.)
+
+---
+
+## 📌 Dependencies
+
+- Bash
+- Python 3
+- MySQL 8 (via Docker)
+- bcrypt, PyMySQL (Python)
+- Docker + Docker Compose
+
+---
+
+## 📜 License
+
+MIT License — feel free to use and modify with credits.
+
+---
+
+## ✨ Author
+
+Developed with ❤️ by Bharath Kumar Anna 
+
+---
